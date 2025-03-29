@@ -8,3 +8,6 @@ st.set_page_config(
     page_title="App",
     page_icon="👋",
 )
+
+st.sidebar.page_link('pages/app.py', label='Home')
+st.sidebar.page_link('pages/camera.py', label='Camera')
