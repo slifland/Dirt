@@ -5,7 +5,7 @@ import os
 from urllib.parse import urlencode
 from streamlit_cookies_controller import CookieController, RemoveEmptyElementContainer
 import extra_streamlit_components as stx
-
+import database_manager
 
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
@@ -16,12 +16,14 @@ def get_manager():
 
 
 cookies = st.context.cookies
-if "user_logged_in" in cookies:
-    st.session_state.authenticated = True
-# else:
-#     cookie_manager = get_manager()
-#     cookie_manager.set("user_logged_in", False)
-#     st.rerun()
+if not "user_logged_in" in cookies:
+    manager = get_manager()
+    manager.set("user_logged_in", False)
+    st.rerun()
+elif "user_logged_in" in cookies:
+    value = cookies["user_logged_in"]
+    if value:
+        st.session_state.authenticated = True
 
 
 # Google OAuth configuration - replace with your actual credentials
@@ -98,6 +100,11 @@ if not st.session_state.authenticated:
             st.components.v1.html(js_code, height=0)
 else:
     cookie_manager = get_manager()
+    if not "user_id" in cookies:
+        id = database_manager.get_new_id()
+        cookie_manager.set("user_id", id)
+        database_manager.insert_data(f'{{"userID":"{id}", "score":"0"}}', "userInfo")
+        print('hi')
     cookie_manager.set("user_logged_in", True)
     st.write("You are logged in!")
     st.session_state.logged_in = True

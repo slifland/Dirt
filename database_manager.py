@@ -17,7 +17,7 @@ def get_data(_client : pymongo.MongoClient, collection_name : str):
     return items
 
 #inserts a document into the collection
-def insert_data(client : pymongo.MongoClient, document, collection_name : str):
+def insert_data(document, collection_name : str):
     if(not is_json(document)):
         st.error("Invalid JSON format")
         return
@@ -39,6 +39,18 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
     db = client.hoohacks25bas
     collection = db[collection_name]
     collection.update_one({"userID": user_id}, {"$inc": {"score": 1}})
+
+#gets the id of the next up user
+def get_new_id() -> int:
+    client = pymongo.MongoClient(
+        f"mongodb+srv://slifland:{st.secrets.db_password}@cluster0.r3jmgkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    db = client.hoohacks25bas
+    collection = db['userInfo']
+    items = collection.find({"userID" : -1}).sort({"userID" : -1}).limit(1)
+    for item in items:
+        return item['userID'] + 1
+    return 0
+    
 
 import json
 
