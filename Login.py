@@ -22,7 +22,7 @@ if not "user_logged_in" in cookies:
     st.rerun()
 elif "user_logged_in" in cookies:
     value = cookies["user_logged_in"]
-    if value:
+    if value == 'true':
         st.session_state.authenticated = True
 
 
@@ -103,9 +103,9 @@ else:
     if not "user_id" in cookies:
         id = database_manager.get_new_id()
         cookie_manager.set("user_id", id)
-        database_manager.insert_data(f'{{"userID":"{id}", "score":"0"}}', "userInfo")
-        print('hi')
-    cookie_manager.set("user_logged_in", True)
+        data = {'userID': id, 'score': 0}
+        database_manager.insert_data(data, "userInfo")
+    cookie_manager.set("user_logged_in", True, key='user_logged_in')
     st.write("You are logged in!")
     st.session_state.logged_in = True
     st.switch_page("pages/app.py")

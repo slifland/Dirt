@@ -18,14 +18,15 @@ def get_data(_client : pymongo.MongoClient, collection_name : str):
 
 #inserts a document into the collection
 def insert_data(document, collection_name : str):
-    if(not is_json(document)):
-        st.error("Invalid JSON format")
+    client = pymongo.MongoClient(
+        f"mongodb+srv://slifland:{st.secrets.db_password}@cluster0.r3jmgkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    if(not dict(document)):
+        st.error("Invalid Document format")
         return
     if collection_name not in client.hoohacks25bas.list_collection_names():
         st.error("Collection does not exist")
+        print('Collection does not exist')
         return
-    client = pymongo.MongoClient(
-        f"mongodb+srv://slifland:{st.secrets.db_password}@cluster0.r3jmgkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     db = client.hoohacks25bas
     collection = db[collection_name]
     collection.insert_one(document)
@@ -46,7 +47,7 @@ def get_new_id() -> int:
         f"mongodb+srv://slifland:{st.secrets.db_password}@cluster0.r3jmgkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     db = client.hoohacks25bas
     collection = db['userInfo']
-    items = collection.find({"userID" : -1}).sort({"userID" : -1}).limit(1)
+    items = collection.find().sort("userID", direction=pymongo.DESCENDING).limit(1)
     for item in items:
         return item['userID'] + 1
     return 0
