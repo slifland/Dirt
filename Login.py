@@ -7,6 +7,9 @@ from streamlit_cookies_controller import CookieController, RemoveEmptyElementCon
 import extra_streamlit_components as stx
 
 
+with open('style.css') as f:
+	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
+
 def get_manager():
     return stx.CookieManager()
 
@@ -99,7 +102,3 @@ else:
     st.write("You are logged in!")
     st.session_state.logged_in = True
     st.switch_page("pages/app.py")
-
-        
-        
-    
