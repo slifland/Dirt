@@ -1,10 +1,17 @@
+import base64
+
+with open("captured.jpg", "rb") as image_file:
+    base64_image = base64.b64encode(image_file.read()).decode('utf-8')
+
+image = f"data:image/jpeg;base64,{base64_image}"
+
 import requests
 import streamlit as st
 import sys
 
 api_key = st.secrets['GPT_API_KEY']
 
-image = "https://storage.googleapis.com/images-lnb-prd-8936dd0.lnb.prd.v8.commerce.mi9cloud.com/product-images/zoom/00244011000004.png"
+#image = "captured.jpg"
 
 headers = {
     "Authorization": f"Bearer {api_key}",
