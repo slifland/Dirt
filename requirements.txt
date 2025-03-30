@@ -34,6 +34,7 @@ oauthlib==3.2.2
 packaging==24.2
 pandas==2.2.3
 pillow==11.1.0
+plotly==6.0.1
 protobuf==5.29.4
 pyarrow==19.0.1
 pycparser==2.22
@@ -55,7 +56,6 @@ streamlit==1.44.0
 streamlit-authenticator==0.4.2
 streamlit-cookies-controller==0.0.4
 streamlit-javascript==0.1.5
-streamlit-js-eval==0.1.7
 streamlit-oauth==0.1.14
 streamlit_folium==0.24.0
 tenacity==9.0.0
