@@ -26,9 +26,8 @@ st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
 client = database_manager.init_connection()
 
-for cookie in st.context.cookies.keys():
-    print(cookie)
-    st.write(cookie)
+cookies = st.context.cookies
+
 
 #st.button("Add one to your score", on_click=database_manager.add_score, args=(client, st.context.cookies['userid'], 'userInfo'))  # Add one to the user's score
 
@@ -37,3 +36,5 @@ df = pd.DataFrame(data)
 del df['_id']
 df = df.sort_values(by='score', ascending=False)  # Sort by score
 st.dataframe(df)  # Display data in a dataframe
+
+st.write(len(cookies))
