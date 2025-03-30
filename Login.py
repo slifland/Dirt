@@ -2,10 +2,15 @@ import streamlit as st
 import requests
 from requests_oauthlib import OAuth2Session
 import os
-from urllib.parse import urlencode
-from streamlit_cookies_controller import CookieController, RemoveEmptyElementContainer
 import extra_streamlit_components as stx
 import database_manager
+import asyncio
+
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
@@ -14,12 +19,13 @@ def get_manager():
     return stx.CookieManager()
 
 
-
+manager = None
 cookies = st.context.cookies
 if not "user_logged_in" in cookies:
     manager = get_manager()
-    manager.set("user_logged_in", False)
-    st.rerun()
+    if manager.get("user_logged_in") is None:
+        manager.set("user_logged_in", False)
+        st.rerun()
 elif "user_logged_in" in cookies:
     value = cookies["user_logged_in"]
     if value == 'true':
@@ -99,7 +105,10 @@ if not st.session_state.authenticated:
             """
             st.components.v1.html(js_code, height=0)
 else:
-    cookie_manager = get_manager()
+    if not manager:
+        cookie_manager = get_manager()
+    else:
+        cookie_manager = manager
     cookie_manager.set("user_logged_in", True, key='user_logged_in')
     st.write("You are logged in!")
     st.session_state.logged_in = True
