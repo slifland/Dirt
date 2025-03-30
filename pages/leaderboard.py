@@ -39,8 +39,9 @@ else:
 
 compostable = st.session_state.get("compostable", "unknown")
 if compostable == "yes":
-    cookie = manager.get("gained_points", None)
-    if cookie: 
+    cookie_points = manager.get("gained_points")
+    time.sleep(2)
+    if cookie_points: 
         st.error("You have already gained points in the last 5 minutes. Try again soon.")
     else:
         database_manager.add_score(client, str(cookie), 'userInfo')
