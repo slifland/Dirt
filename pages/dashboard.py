@@ -44,8 +44,8 @@ st.title("%s Items Composted" % total_composted)
 if 'id' in df.columns and 'score' in df.columns:
         st.title("Distribution of Compost Scores")
         fig = px.bar(df, x='id', y='score', title='Data Visualization')
-        fig.layout.paper_bgcolor='#C2B280'
-        fig.layout.plot_bgcolor='#C2B280'
+        fig.layout.paper_bgcolor='#F1F2F6'
+        fig.layout.plot_bgcolor='#F1F2F6'
         st.plotly_chart(fig)
 else:
    st.error("Columns 'id' and 'score' not found in the data.")
@@ -53,7 +53,7 @@ else:
 if '_id' in df_category.columns and 'count' in df_category.columns:
         st.title("Distribution of Compost Categories")
         fig_category = px.pie(df_category, values ='count', names='_id', title='Data Visualization')
-        fig_category.layout.paper_bgcolor='#C2B280'
+        fig_category.layout.paper_bgcolor='#F1F2F6'
         st.plotly_chart(fig_category)
 else:
    st.error("Columns '_id' and 'count' not found in the data.")

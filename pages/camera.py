@@ -28,6 +28,7 @@ with open('style.css') as f:
 def runPrompt():
     st.spinner("Computing...")
 
+st.title("dirt")
 st.title("Compostable?")
 st.title("Take a Picture!")
 
