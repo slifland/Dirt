@@ -38,9 +38,9 @@ if st.button("Confirm Picture"):
     if st.session_state.image:
         img = Image.open(st.session_state.image)
         img.save("captured.jpg")
-        st.success("Image saved as captured.jpg")
+        #st.success("Image saved as captured.jpg")
 
         with st.spinner("Analyzing image..."):
              result = analyze_image("captured.jpg")
-             st.markdown("### Here's What We Found:")
+             #st.markdown("### Here's What We Found:")
              st.markdown(result)
