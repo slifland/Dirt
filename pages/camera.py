@@ -4,6 +4,7 @@ import io
 import extra_streamlit_components as stx
 import time
 import sys
+import database_manager
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -57,9 +58,21 @@ if st.button("Confirm Picture"):
              #st.markdown("### Here's What We Found:")
              st.markdown(result)
              compostable = st.session_state.get("compostable", "unknown")
-             if compostable == 'yes':
-                 #st.button("Go to leaderboard!", on_click=st.switch_page("pages/leaderboard.py"))
-                 if not get_manager().get("gained_points"):
-                     st.success("You have points waiting for you! Go to leaderboard tab to receive them.")
+             compostable = st.session_state.get("compostable", "unknown")
+             manager = get_manager()
+             if compostable == "yes":
+                cookie_points = manager.get("gained_points")
+                time.sleep(2)
+                if cookie_points: 
+                    st.error("You have already gained points in the last 5 minutes. Thanks for helping the environment!")
+                else:
+                    cookie = manager.get("user_email")
+                    time.sleep(2)
+                    client = database_manager.init_connection()
+                    database_manager.add_score(client, str(cookie), 'userInfo')
+                    manager.set("gained_points", "gained_points", max_age=300)
+                    time.sleep(2)
+                    compostable = "no"
+                    st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
                  
              
