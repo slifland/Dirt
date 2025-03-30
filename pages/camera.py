@@ -57,7 +57,6 @@ if st.button("Confirm Picture"):
              #st.markdown("### Here's What We Found:")
              st.markdown(result)
              compostable = st.session_state.get("compostable", "unknown")
-             compostable = st.session_state.get("compostable", "unknown")
              manager = get_manager()
              if compostable == "yes":
                 cookie_points = manager.get("gained_points")
@@ -73,6 +72,7 @@ if st.button("Confirm Picture"):
                     time.sleep(2)
                     compostable = "no"
                     st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
-                    time.sleep(10000)
-                 
+                time.sleep(10000)        
+             else:
+                 time.sleep(10000)    
              
