@@ -101,7 +101,10 @@ if not st.session_state.authenticated:
             """
             st.components.v1.html(js_code, height=0)
 else:
-    cookie_manager = get_manager()
+    if not manager:
+        cookie_manager = get_manager()
+    else:
+        cookie_manager = manager
     cookie_manager.set("user_logged_in", True, key='user_logged_in')
     st.write("You are logged in!")
     st.session_state.logged_in = True
