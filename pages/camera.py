@@ -54,6 +54,7 @@ if st.button("Confirm Picture"):
             result = analyze_image("captured.jpg")
             st.markdown(result)
             compostable = st.session_state.get("compostable", "unknown")
+            time.sleep(10000)
             if compostable == "yes":
                 added = database_manager.attempt_add_score('userInfo')
                 st.session_state.compostable = None
