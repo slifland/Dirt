@@ -49,7 +49,8 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
     collection.update_one({"id": user_id}, {"$inc": {"score": 1}})
     
     #adds one to a user's score
-def attempt_add_score(client : pymongo.MongoClient, collection_name : str) -> bool:
+def attempt_add_score(collection_name : str) -> bool:
+    client = init_connection()
     if collection_name not in client.hoohacks25bas.list_collection_names():
         st.error("Collection does not exist")
         return
