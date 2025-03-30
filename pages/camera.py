@@ -22,10 +22,9 @@ except RuntimeError:
 
 manager = None
 if not "manager" in st.session_state:
-    manager = get_manager()
+    st.session_state.manager = get_manager()
 else:
     manager = st.session_state.manager
-    time.sleep(2)
 
 st.sidebar.page_link('pages/camera.py', label='Upload')
 st.sidebar.page_link('pages/leaderboard.py', label='Leaderboard')
