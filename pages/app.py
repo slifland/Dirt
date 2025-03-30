@@ -2,9 +2,10 @@ import streamlit as st
 import database_manager
 import pandas as pd
 
-if not st.session_state.logged_in:
-    st.info('Please Login from the Home page and try again.')
-    st.stop()
+if "user_logged_in" in st.context.cookies:
+    if(st.context.cookies["user_logged_in"] == 'false'):
+        st.info('Please Login from the Home page and try again.')
+        st.stop()
 
 st.set_page_config(
     page_title="App",
