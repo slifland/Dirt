@@ -44,6 +44,7 @@ if "localhost" in os.getenv("STREAMLIT_SERVER_ADDRESS", "localhost"):
     redirect_uri = "http://localhost:8501"
 else:
     redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app"
+st.write(f"Using redirect URI: {redirect_uri}")  # Debug output
 #redirect_uri = "http://localhost:8501"
 #redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app/"
 scope = ["https://www.googleapis.com/auth/userinfo.email", 
