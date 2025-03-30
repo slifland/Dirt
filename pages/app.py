@@ -14,6 +14,7 @@ st.set_page_config(
 st.sidebar.page_link('pages/app.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
 st.sidebar.page_link('pages/map.py', label='Map')
+st.sidebar.page_link('pages/map.py', label='Dashboard')
 
 client = database_manager.init_connection()
 
