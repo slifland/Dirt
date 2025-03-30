@@ -18,7 +18,8 @@ st.sidebar.page_link('pages/map.py', label='Map')
 st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
 client = database_manager.init_connection()
-print(st.context.cookies['user_id'])
+for cookie in st.context.cookies:
+    st.write(f"{cookie}: {st.context.cookies[cookie]}")
 st.button("Add one to your score", on_click=database_manager.add_score, args=(client, st.context.cookies['user_id'], 'userInfo'))  # Add one to the user's score
 
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
