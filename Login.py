@@ -26,7 +26,7 @@ elif "user_logged_in" in cookies:
         st.session_state.authenticated = True
 
 
-# Google OAuth configuration - replace with your actual credentials
+# Google OAuth configuration
 client_id = "8378098624-ugfuo7avsq8b24lf28pkctk55c695e8j.apps.googleusercontent.com"
 client_secret = "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"
 authorization_base_url = "https://accounts.google.com/o/oauth2/auth"

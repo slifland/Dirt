@@ -1,11 +1,8 @@
 import requests
+import streamlit as st
+import sys
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-api_key = os.getenv("GPT_API_KEY")
-
+api_key = st.secrets['GPT_API_KEY']
 
 image = "https://storage.googleapis.com/images-lnb-prd-8936dd0.lnb.prd.v8.commerce.mi9cloud.com/product-images/zoom/00244011000004.png"
 
