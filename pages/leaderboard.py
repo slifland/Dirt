@@ -39,8 +39,14 @@ else:
 
 compostable = st.session_state.get("compostable", "unknown")
 if compostable == "yes":
-    database_manager.add_score(client, str(cookie), 'userInfo')
-    compostable = "no"
+    cookie = manager.get("gained_points", None)
+    if cookie: 
+        st.error("You have already gained points in the last 5 minutes. Try again soon.")
+    else:
+        database_manager.add_score(client, str(cookie), 'userInfo')
+        manager.set("gained_points", "gained_points", max_age=300)
+        time.sleep(2)
+        compostable = "no"
 
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
 df = pd.DataFrame(data)

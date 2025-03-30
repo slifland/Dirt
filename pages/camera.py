@@ -1,7 +1,7 @@
 from PIL import Image
 import streamlit as st
 import io
-
+import time
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -52,3 +52,8 @@ if st.button("Confirm Picture"):
              result = analyze_image("captured.jpg")
              #st.markdown("### Here's What We Found:")
              st.markdown(result)
+             compostable = st.session_state.get("compostable", "unknown")
+             if compostable == 'yes':
+                 st.button("Go to leaderboard!", on_click=st.switch_page("pages/leaderboard.py"))
+                 
+             
