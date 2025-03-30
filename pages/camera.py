@@ -70,9 +70,6 @@ if st.button("Confirm Picture"):
                     database_manager.add_score(client, str(cookie), 'userInfo')
                     manager.set("gained_points", "gained_points", max_age=300)
                     time.sleep(2)
-                    compostable = "no"
+                    st.session_state.compostable = None
                     st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
-                time.sleep(10000)        
-             else:
-                 time.sleep(10000)    
              
