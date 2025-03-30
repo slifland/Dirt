@@ -49,4 +49,4 @@ for bin in bins:
         icon=folium.Icon(color="green", icon="leaf", prefix="fa")
     ).add_to(m)  
 
-st_data = st_folium(m, width=800, height=600)
+st_data = st_folium(m, width='100%')
