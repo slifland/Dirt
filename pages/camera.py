@@ -60,3 +60,4 @@ if st.button("Confirm Picture"):
                 # if st.button("Go to leaderboard"):
                 #     st.switch_page('pages/leaderboard.py')
              
+#test
