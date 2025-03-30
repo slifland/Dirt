@@ -24,8 +24,8 @@ st.set_page_config(
 def get_manager():
     return stx.CookieManager()
 
-st.sidebar.page_link('pages/leaderboard.py', label='Home')
-st.sidebar.page_link('pages/camera.py', label='Camera')
+st.sidebar.page_link('pages/camera.py', label='Upload Image')
+st.sidebar.page_link('pages/leaderboard.py', label='Leaderboard')
 st.sidebar.page_link('pages/map.py', label='Map')
 st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 

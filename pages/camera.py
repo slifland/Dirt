@@ -16,9 +16,8 @@ except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
-
-st.sidebar.page_link('pages/leaderboard.py', label='Home')
-st.sidebar.page_link('pages/camera.py', label='Camera')
+st.sidebar.page_link('pages/camera.py', label='Upload')
+st.sidebar.page_link('pages/leaderboard.py', label='Leaderboard')
 st.sidebar.page_link('pages/map.py', label='Map')
 st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
