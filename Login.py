@@ -122,4 +122,4 @@ else:
     time.sleep(2)
     st.write("You are logged in!")
     st.session_state.logged_in = True
-    st.switch_page("pages/app.py")
+    st.switch_page("pages/leaderboard.py")
