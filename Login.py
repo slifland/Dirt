@@ -40,18 +40,27 @@ client_id = "8378098624-ugfuo7avsq8b24lf28pkctk55c695e8j.apps.googleusercontent.
 client_secret = "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"
 authorization_base_url = "https://accounts.google.com/o/oauth2/auth"
 token_url = "https://oauth2.googleapis.com/token"
+if "localhost" in os.getenv("STREAMLIT_SERVER_ADDRESS", "localhost"):
+    redirect_uri = "http://localhost:8501"
+else:
+    redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app"
 #redirect_uri = "http://localhost:8501"
-redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app"
+#redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app/"
 scope = ["https://www.googleapis.com/auth/userinfo.email", 
          "https://www.googleapis.com/auth/userinfo.profile", 
          "openid"]
+
+st.write(f"Using redirect URI: {redirect_uri}")  # Debug output
+st.write(f"Using redirect URI: {redirect_uri}")  # Debug output
+st.write(f"Using redirect URI: {redirect_uri}")  # Debug output
+st.write(f"Using redirect URI: {redirect_uri}")  # Debug output
+
 
 # Initialize the OAuth session
 if 'oauth_state' not in st.session_state:
     st.session_state.oauth_state = None
 
 def get_oauth_session():
-    print(redirect_uri)
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope, state=st.session_state.oauth_state)
 
 # Check authentication state
