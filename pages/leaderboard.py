@@ -38,7 +38,7 @@ if cookie is None:
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
 df = pd.DataFrame(data)
 del df['_id']
-del df ['last_scored']
+del df['last_scored']
 df = df.sort_values(by='score', ascending=False).reset_index(drop=True)  # Sort by score
 # Assign Medals to the Email Column
 medals = ["🥇", "🥈", "🥉"]
