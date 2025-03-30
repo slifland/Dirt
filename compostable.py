@@ -70,6 +70,59 @@ def analyze_image(image_path):
             if not (response_text.lower().startswith("Shucks")):
                 response_text = "Uh oh! We detected a human in the image. Please try to best capture the item so we can determine its compostability."
 
+        schema = {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "enum": [
+                        "Non-Dairy Food",
+                        "Cardboard Products",
+                        "Paper Products",
+                        "Miscellaneous",
+                        "Dairy"
+                    ]
+                }
+            },
+            "required": ["category"]
+        }
+        if(st.session_state["compostable"] == "yes"):
+            data = {
+                "model": "gpt-4o",
+                "temperature": 0.3,
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Classify the compostable item into one of the following categories: "
+                                "\"Non-Dairy Food\", \"Cardboard Products\", \"Paper Products\", \"Miscellaneous\", or \"Dairy\". "
+                                "Respond with only the category name."
+                    },
+                    {
+                        "role": "user",
+                        "content": response_text  # Use the model's original response as context
+                    }
+                ],
+                "response_format": "json",
+                "schema": schema
+            }
+
+            response = requests.post(
+                "https://api.openai.com/v1/chat/completions",
+                headers=headers,
+                json=data
+            )
+
+            result = response.json()
+            
+
+            # Check for errors in the response
+            if "error" in result:
+                st.error(f"API Error: {result['error']['message']}")
+            else:
+                category = result['choices'][0]['message']['content']['category']
+                st.session_state["compostable_category"] = category
+                st.write(f"Category: {category}")
+        
         return response_text
     
 
