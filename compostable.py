@@ -25,7 +25,7 @@ def analyze_image(image_path):
                         {
                             "type": "text",
                             "text": (
-                                 "You should determine whether an item in the image provided is compostable in a standard compost bin on college campuses. Answer using the EXACT format below, adjusting for grammar purposes. If you get any unexpected image inputs (e.g., entire humans), output the default response (found below)\n"
+                                 "You should determine whether an item in the image provided is compostable in a standard compost bin on college campuses. Answer using the EXACT format below, adjusting for grammar purposes and allocating bulletpoints for applicable sections. If you get any unexpected image inputs (e.g., entire humans), output the default response (found below)\n"
                                 "Response Format:\n\n"
                                 "# A [Object name] is [compostable/not compostable]\n\n"
                                 "[Something like [HOOray -- your contributions are making a big impact!] if the item is compostable or [We appreciate that you're checking — every effort counts!] if the item is not compostable]\n\n"
@@ -59,7 +59,14 @@ def analyze_image(image_path):
         if "error" in result:
             return f"API Error: {result['error']['message']}"
 
-        return result['choices'][0]['message']['content']
+        response_text = result['choices'][0]['message']['content']
+
+        st.session_state["compostable"] = "no"
+        if response_text.lower().startswith("#") and " is compostable" in response_text.lower():
+            st.session_state["compostable"] = "yes"
+
+        return response_text
+    
 
     except Exception as e:
         return f"Unexpected error: {e}"
