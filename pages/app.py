@@ -26,7 +26,7 @@ st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
 client = database_manager.init_connection()
 
-for cookie in st.context.cookies:
+for cookie in st.context.cookies.keys():
     print(cookie)
     st.write(cookie)
 
