@@ -50,7 +50,6 @@ if st.button("Confirm Picture"):
         img.save("captured.jpg")
         with st.spinner("Analyzing image..."):
             result = analyze_image("captured.jpg")
-            st.write(st.session_state['compostable_category'])
             st.markdown(result)
             compostable = st.session_state.get("compostable", "unknown")
             if compostable == "yes":

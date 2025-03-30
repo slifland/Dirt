@@ -121,7 +121,6 @@ def analyze_image(image_path):
             )
 
             result = response.json()
-            st.write(result)
 
 
             if "error" in result:
@@ -130,7 +129,6 @@ def analyze_image(image_path):
                 structured_output = result["choices"][0]["message"]["tool_calls"][0]["function"]["arguments"]
                 category = json.loads(structured_output)["category"]
                 st.session_state["compostable_category"] = category  # Store structured output
-                st.write(f"Category: {category}")
         
         return response_text
     
