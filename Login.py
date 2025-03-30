@@ -91,6 +91,7 @@ if not st.session_state.authenticated:
             
             # Clear query parameters to avoid token reuse
             st.query_params.clear()
+            time.sleep(1)
             st.rerun()
         except Exception as e:
             st.error(f"Authentication failed: {str(e)}")
