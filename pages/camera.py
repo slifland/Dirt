@@ -1,11 +1,16 @@
+from PIL import Image
 import streamlit as st
+import io
+
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from compostable import analyze_image
 
 st.sidebar.page_link('pages/app.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
 st.sidebar.page_link('pages/map.py', label='Map')
-
-from PIL import Image
-import io
 
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
@@ -33,4 +38,8 @@ if st.button("Confirm Picture"):
         img = Image.open(st.session_state.image)
         img.save("captured.jpg")
         st.success("Image saved as captured.jpg")
-        runPrompt()
+
+        with st.spinner("Analyzing image..."):
+             result = analyze_image("captured.jpg")
+             st.markdown("### Here's What We Found:")
+             st.markdown(result)
