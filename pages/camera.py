@@ -6,7 +6,6 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
 from compostable import analyze_image
 
 import asyncio
@@ -27,12 +26,13 @@ with open('style.css') as f:
 def runPrompt():
     st.spinner("Computing...")
 
-st.title("Camera")
+st.title("Compostable?")
+st.title("Take a Picture!")
 
 if "image" not in st.session_state:
     st.session_state.image = None
 
-image = st.camera_input("Take a picture")
+image = st.camera_input("")
 
 if image:
     st.session_state.image = image
