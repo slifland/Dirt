@@ -1,6 +1,13 @@
 import streamlit as st
 import database_manager
 import pandas as pd
+import asyncio
+
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 
 if "user_logged_in" in st.context.cookies:
     if(st.context.cookies["user_logged_in"] == 'false'):
@@ -19,7 +26,11 @@ st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
 client = database_manager.init_connection()
 
-st.button("Add one to your score", on_click=database_manager.add_score, args=(client, st.context.cookies['userid'], 'userInfo'))  # Add one to the user's score
+for cookie in st.context.cookies:
+    print(cookie)
+    st.write(cookie)
+
+#st.button("Add one to your score", on_click=database_manager.add_score, args=(client, st.context.cookies['userid'], 'userInfo'))  # Add one to the user's score
 
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
 df = pd.DataFrame(data)
