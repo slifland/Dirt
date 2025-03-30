@@ -5,7 +5,7 @@ from streamlit_folium import st_folium
 st.set_page_config(page_title="Compost @ UVA", layout="wide")
 st.title("Compost Bin Locations at UVA")
 
-st.sidebar.page_link('pages/app.py', label='Home')
+st.sidebar.page_link('pages/leaderboard.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
 st.sidebar.page_link('pages/map.py', label='Map')
 st.sidebar.page_link('pages/dashboard.py', label='Dashboard')

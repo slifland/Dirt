@@ -3,6 +3,7 @@ import database_manager
 import pandas as pd
 import asyncio
 import extra_streamlit_components as stx
+import matplotlib
 
 
 try:
@@ -10,19 +11,20 @@ try:
 except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
+    
 
 if not 'authenticated' in st.session_state:
     st.stop()
 
 st.set_page_config(
-    page_title="App",
+    page_title="Leaderboard",
     page_icon="👋",
 )
 
 def get_manager():
     return stx.CookieManager()
 
-st.sidebar.page_link('pages/app.py', label='Home')
+st.sidebar.page_link('pages/leaderboard.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
 st.sidebar.page_link('pages/map.py', label='Map')
 st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
@@ -40,6 +42,15 @@ else:
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
 df = pd.DataFrame(data)
 del df['_id']
-df = df.sort_values(by='score', ascending=False)  # Sort by score
-st.dataframe(df)  # Display data in a dataframe
+df = df.sort_values(by='score', ascending=False).reset_index(drop=True)  # Sort by score
+# Assign Medals to the Email Column
+medals = ["🥇", "🥈", "🥉"]
+df["id"] = df["id"].astype(str)  # Ensure it's a string column
+df.loc[:2, "id"] = [medals[i] + " " + email for i, email in enumerate(df["id"][:3])]
+
+st.title("🏆 Leaderboard 🏆")
+
+styled_df = df.style.background_gradient(subset='score', cmap='RdYlGn')
+
+st.dataframe(styled_df, hide_index=True, use_container_width=True)
 
