@@ -46,5 +46,6 @@ button.st-emotion-cache-ocsh0s.em9zgd02{
 
 h1#dirt{
     font-family: comic-sans;
-    color: red;
+    color: var(--accent);
+
 }
