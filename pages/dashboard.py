@@ -3,6 +3,9 @@ import database_manager
 import pandas as pd
 import plotly.express as px
 
+with open('style.css') as f:
+	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
+
 client = database_manager.init_connection()
 
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
@@ -23,13 +26,18 @@ df = pd.DataFrame(data_list)
 df_category = pd.DataFrame(data_list_category)
 
 if 'id' in df.columns and 'score' in df.columns:
-   st.title("MongoDB Data with Plotly")
-   fig = px.bar(df, x='id', y='score', title='Data Visualization')
-   st.plotly_chart(fig)
+        st.title("Distribution of compost scores")
+        fig = px.bar(df, x='id', y='score', title='Data Visualization')
+        fig.layout.paper_bgcolor='#C2B280'
+        fig.layout.plot_bgcolor='#C2B280'
+        st.plotly_chart(fig)
 else:
    st.error("Columns 'id' and 'score' not found in the data.")
 
-#if '_id' in df_category.columns and 'count' in df_category.columns:
-st.title("Distribution of different composted foods")
-fig_category = px.pie(df_category, values ='count', names='_id', title='Data Visualization')
-st.plotly_chart(fig_category)
+if '_id' in df_category.columns and 'count' in df_category.columns:
+        st.title("Distribution of different composted foods")
+        fig_category = px.pie(df_category, values ='count', names='_id', title='Data Visualization')
+        fig_category.layout.paper_bgcolor='#C2B280'
+        st.plotly_chart(fig_category)
+else:
+   st.error("Columns '_id' and 'count' not found in the data.")
