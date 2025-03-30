@@ -51,7 +51,6 @@ if 'oauth_state' not in st.session_state:
     st.session_state.oauth_state = None
 
 def get_oauth_session():
-    print(redirect_uri)
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope, state=st.session_state.oauth_state)
 
 # Check authentication state
