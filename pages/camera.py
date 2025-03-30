@@ -4,6 +4,9 @@ st.sidebar.page_link('pages/app.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
 st.sidebar.page_link('pages/map.py', label='Map')
 
+from PIL import Image
+import io
+
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
 
@@ -26,4 +29,8 @@ else:
     st.write("No image captured yet.")
 
 if st.button("Confirm Picture"):
-    runPrompt()
+    if st.session_state.image:
+        img = Image.open(st.session_state.image)
+        img.save("captured.jpg")
+        st.success("Image saved as captured.jpg")
+        runPrompt()
