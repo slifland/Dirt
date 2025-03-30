@@ -54,10 +54,10 @@ if st.button("Confirm Picture"):
             st.markdown(result)
             compostable = st.session_state.get("compostable", "unknown")
             if compostable == "yes":
-                #added = database_manager.attempt_add_score('userInfo')
+                added = database_manager.attempt_add_score('userInfo')
                 st.session_state.compostable = None
-                #if added:
-                st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
-                #else:
-                st.error("You have received points in the last 5 minutes. Thanks for helping environment!")
+                if added:
+                    st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
+                else:
+                    st.error("You have received points in the last 5 minutes. Thanks for helping environment!")
              
