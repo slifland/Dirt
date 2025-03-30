@@ -32,7 +32,7 @@ def analyze_image(image_path):
                                 "### [\"Why is a [item] compostable? 🌱 \" if applicable]\n\n"
                                 "### [\"Why is a [item] not compostable? 🌱 \" if applicable]\n\n"
                                 "### [\"Specific Steps for Compost 🧑‍🌾 \" if applicable]\n\n"
-                                "Default Response (in italics):\n"
+                                "Default Response:\n"
                                 "Shucks -- we had a bit of trouble with your request. Make sure you are in good lighting and that no external objects or humans are clearly visible in the camera."
                             )
                         }
@@ -60,16 +60,16 @@ def analyze_image(image_path):
             return f"API Error: {result['error']['message']}"
 
         response_text = result['choices'][0]['message']['content']
-        st.session_state["compostable"] = "yes"
-        return response_text
+        st.success(response.text)
 
         st.session_state["compostable"] = "no"
         if response_text.lower().startswith("#") and " is compostable" in response_text.lower():
             st.session_state["compostable"] = "yes"
 
-        if not (response_text.lower().startswith("# a ") and (" is compostable" in response_text.lower() or " is not compostable" in response_text.lower())):
-             if not (response_text.lower().startswith("Shucks")):
-                 response_text = "Uh oh! We detected a human in the image. Please try to best capture the item so we can determine its compostability."
+        if not (response_text.lower().startswith("#") and (" compostable" in response_text.lower())):
+            if not (response_text.lower().startswith("Shucks")):
+                response_text = "Uh oh! We detected a human in the image. Please try to best capture the item so we can determine its compostability."
+
         return response_text
     
 
