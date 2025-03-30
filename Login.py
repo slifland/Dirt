@@ -32,6 +32,7 @@ if not "user_logged_in" in cookies:
         st.rerun()
     else:
         value = manager.get("user_logged_in")
+        st.write(value)
         if value == 'true':
             st.session_state.authenticated = True
 
