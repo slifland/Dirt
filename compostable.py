@@ -1,6 +1,7 @@
 import base64
 import requests
 import streamlit as st
+import json
 
 def analyze_image(image_path):
     try:
@@ -69,24 +70,8 @@ def analyze_image(image_path):
         if not (response_text.lower().startswith("#") and (" compostable" in response_text.lower())):
             if not (response_text.lower().startswith("Shucks")):
                 response_text = "Uh oh! We detected a human in the image. Please try to best capture the item so we can determine its compostability."
-
-        schema = {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string",
-                    "enum": [
-                        "Non-Dairy Food",
-                        "Cardboard Products",
-                        "Paper Products",
-                        "Miscellaneous",
-                        "Dairy"
-                    ]
-                }
-            },
-            "required": ["category"]
-        }
         if(st.session_state["compostable"] == "yes"):
+            # Define the structured output format using OpenAI's "function calling" method
             data = {
                 "model": "gpt-4o",
                 "temperature": 0.3,
@@ -99,13 +84,36 @@ def analyze_image(image_path):
                     },
                     {
                         "role": "user",
-                        "content": response_text  # Use the model's original response as context
+                        "content": response_text  # The response from the first model call
                     }
                 ],
-                "response_format": "json",
-                "schema": schema
+                "tools": [  # Define structured output constraints
+                    {
+                        "type": "function",
+                        "function": {
+                            "name": "classify_compostable_item",
+                            "description": "Classify the compostable item into one of the predefined categories.",
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "category": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Non-Dairy Food",
+                                            "Cardboard Products",
+                                            "Paper Products",
+                                            "Miscellaneous",
+                                            "Dairy"
+                                        ]
+                                    }
+                                },
+                                "required": ["category"]
+                            }
+                        }
+                    }
+                ],
+                "tool_choice": {"type": "function", "function": {"name": "classify_compostable_item"}}  # Force structured response
             }
-
             response = requests.post(
                 "https://api.openai.com/v1/chat/completions",
                 headers=headers,
@@ -116,12 +124,12 @@ def analyze_image(image_path):
             st.write(result)
 
 
-            # Check for errors in the response
             if "error" in result:
                 st.error(f"API Error: {result['error']['message']}")
             else:
-                category = result['choices'][0]['message']['content']['category']
-                st.session_state["compostable_category"] = category
+                structured_output = result["choices"][0]["message"]["tool_calls"][0]["function"]["arguments"]
+                category = json.loads(structured_output)["category"]
+                st.session_state["compostable_category"] = category  # Store structured output
                 st.write(f"Category: {category}")
         
         return response_text
