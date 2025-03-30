@@ -5,18 +5,19 @@ import plotly.express as px
 
 client = database_manager.init_connection()
 
-data = database_manager.get_data(client, 'accounts')  # Get data from the database
+data = database_manager.get_data(client, 'userInfo')  # Get data from the database
 data_list = list(data)
 
 for record in data_list:
-        record['account_id'] = int(record['account-id']['$numberInt'])
-        record['limit'] = int(record['limit']['$numberInt'])
+        record['id'] = record['id']
+        record['score'] = int(record['score'])
 
 df = pd.DataFrame(data_list)
 
-st.write(df.head())
+if 'id' in df.columns and 'score' in df.columns:
+   st.title("MongoDB Data with Plotly")
+   fig = px.bar(df, x='id', y='score', title='Data Visualization')
+   st.plotly_chart(fig)
+else:
+   st.error("Columns 'field1' and 'field2' not found in the data.")
 
-fig = px.bar(df, x='field1', y='field2', title='Data Visualization')
-
-st.title("MongoDB Data with Plotly")
-st.plotly_chart(fig)
