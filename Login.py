@@ -45,7 +45,7 @@ token_url = "https://oauth2.googleapis.com/token"
 url = st_javascript("await fetch('').then(r => window.parent.location.href)")
 redirect_uri = url
 print(url)
-redirect_uri = "http://localhost:8501"
+#redirect_uri = "http://localhost:8501"
 scope = ["https://www.googleapis.com/auth/userinfo.email", 
          "https://www.googleapis.com/auth/userinfo.profile", 
          "openid"]
