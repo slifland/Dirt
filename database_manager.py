@@ -41,16 +41,6 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
     collection = db[collection_name]
     collection.update_one({"id": user_id}, {"$inc": {"score": 1}})
 
-#gets the id of the next up user
-def get_new_id() -> int:
-    client = pymongo.MongoClient(
-        f"mongodb+srv://slifland:{st.secrets.db_password}@cluster0.r3jmgkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-    db = client.hoohacks25bas
-    collection = db['userInfo']
-    items = collection.find().sort("userID", direction=pymongo.DESCENDING).limit(1)
-    for item in items:
-        return item['userID'] + 1
-    return 0
 
 #adds a user to the database if they do not exist
 def add_user_if_necessary(user : dict):
