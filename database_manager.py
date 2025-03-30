@@ -44,13 +44,20 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
         client = init_connection()
     if collection_name not in client.hoohacks25bas.list_collection_names():
         st.error("Collection does not exist")
-        return
+        return False
     
     db = client.hoohacks25bas
     collection = db[collection_name]
     result = collection.find()
     result = list(result)
-    collection.update_one({"id": user_id}, {"$inc": {"score": 1}})
+    if not "last_scored" in result:
+        collection.update_one({"id": user_id}, {"$inc": {"score": 1}, "last_scored": datetime.datetime})
+        return True
+    elif (datetime.datetime.now() - result['last_scored']).total_seconds() > 300:
+        collection.update_one({"id": user_id}, {"$inc": {"score": 1}, "last_scored": datetime.datetime})
+        return True
+    else:
+        return False
     
 #     #adds one to a user's score
 # def attempt_add_score(collection_name : str, manager) -> bool:
