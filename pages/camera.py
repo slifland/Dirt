@@ -1,10 +1,14 @@
 import streamlit as st
 
+st.sidebar.page_link('pages/app.py', label='Home')
+st.sidebar.page_link('pages/camera.py', label='Camera')
+st.sidebar.page_link('pages/map.py', label='Map')
+
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
 
 def runPrompt():
-	st.text("Computing")
+    st.spinner("Computing...")
 
 st.title("Camera")
 

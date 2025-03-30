@@ -5,6 +5,10 @@ from streamlit_folium import st_folium
 st.set_page_config(page_title="Compost @ UVA", layout="wide")
 st.title("Compost Bin Locations at UVA")
 
+st.sidebar.page_link('pages/app.py', label='Home')
+st.sidebar.page_link('pages/camera.py', label='Camera')
+st.sidebar.page_link('pages/map.py', label='Map')
+
 bins = [
   { "name": "West Range Café", "lat": 38.03440597950913, "lng": -78.50549149999998 }, # 38.03440597950913, -78.50549149999998
   { "name": "Fine Arts Café", "lat": 38.038935874378204, "lng": -78.50381527116451 }, # 38.038935874378204, -78.50381527116451
