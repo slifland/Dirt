@@ -2,8 +2,6 @@ import streamlit as st
 import requests
 from requests_oauthlib import OAuth2Session
 import os
-from urllib.parse import urlencode
-from streamlit_cookies_controller import CookieController, RemoveEmptyElementContainer
 import extra_streamlit_components as stx
 import database_manager
 
@@ -41,8 +39,11 @@ if 'oauth_state' not in st.session_state:
     st.session_state.oauth_state = None
 
 def get_oauth_session():
+    print('hi')
+    st.button('hi')
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope, state=st.session_state.oauth_state)
 
+st.button("hello!")
 # Check authentication state
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
