@@ -50,7 +50,7 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
     collection = db[collection_name]
     result = collection.find_one({"id": user_id})
     st.write(result)
-    if "last_scored" in result:
+    if not "last_scored" in result:
         collection.update_one({"id": user_id}, {"$inc": {"score": 1}, "$set": {"last_scored": datetime.datetime.now()}})
         return True
     elif (datetime.datetime.now() - result['last_scored']).total_seconds() > 300:
