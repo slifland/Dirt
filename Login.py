@@ -41,7 +41,7 @@ client_secret = "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"
 authorization_base_url = "https://accounts.google.com/o/oauth2/auth"
 token_url = "https://oauth2.googleapis.com/token"
 #redirect_uri = "http://localhost:8501"
-redirect_uri = "https://hoohacks25bas.streamlit.app/login"
+redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app/login"
 scope = ["https://www.googleapis.com/auth/userinfo.email", 
          "https://www.googleapis.com/auth/userinfo.profile", 
          "openid"]
@@ -51,6 +51,7 @@ if 'oauth_state' not in st.session_state:
     st.session_state.oauth_state = None
 
 def get_oauth_session():
+    print(redirect_uri)
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope, state=st.session_state.oauth_state)
 
 # Check authentication state
@@ -106,8 +107,6 @@ if not st.session_state.authenticated:
                 prompt="select_account"  # Force account selection
             )
             st.session_state.oauth_state = state
-            
-            
             
             webbrowser.open(authorization_url)
             
