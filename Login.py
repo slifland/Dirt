@@ -76,7 +76,10 @@ if not st.session_state.authenticated:
             st.session_state.authenticated = True
             new_user = {"id": user_info['id'], "score": 0}
             database_manager.add_user_if_necessary(new_user)
-            cookie_manager = get_manager()
+            if not manager:
+                cookie_manager = get_manager()
+            else:
+                cookie_manager = manager
             cookie_manager.set("user_id", user_info['id'], key='userid', max_age=2592000)
             
             # Clear query parameters to avoid token reuse
