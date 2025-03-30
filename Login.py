@@ -4,12 +4,10 @@ from requests_oauthlib import OAuth2Session
 import os
 import extra_streamlit_components as stx
 import database_manager
-import asyncio
 import webbrowser
 import time
 from streamlit_javascript import st_javascript
-
-
+import asyncio
 try:
     loop = asyncio.get_running_loop()
 except RuntimeError:
@@ -42,8 +40,8 @@ client_id = "8378098624-ugfuo7avsq8b24lf28pkctk55c695e8j.apps.googleusercontent.
 client_secret = "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"
 authorization_base_url = "https://accounts.google.com/o/oauth2/auth"
 token_url = "https://oauth2.googleapis.com/token"
-redirect_uri = "http://localhost:8501"
-#redirect_uri = "https://hoohacks25bas.streamlit.app/login"
+#redirect_uri = "http://localhost:8501"
+redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app"
 scope = ["https://www.googleapis.com/auth/userinfo.email", 
          "https://www.googleapis.com/auth/userinfo.profile", 
          "openid"]
@@ -53,6 +51,7 @@ if 'oauth_state' not in st.session_state:
     st.session_state.oauth_state = None
 
 def get_oauth_session():
+    print(redirect_uri)
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope, state=st.session_state.oauth_state)
 
 # Check authentication state
@@ -91,6 +90,7 @@ if not st.session_state.authenticated:
             
             # Clear query parameters to avoid token reuse
             st.query_params.clear()
+            time.sleep(1)
             st.rerun()
         except Exception as e:
             st.error(f"Authentication failed: {str(e)}")

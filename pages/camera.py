@@ -6,7 +6,16 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+
 from compostable import analyze_image
+
+import asyncio
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
 
 st.sidebar.page_link('pages/leaderboard.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
@@ -38,9 +47,9 @@ if st.button("Confirm Picture"):
     if st.session_state.image:
         img = Image.open(st.session_state.image)
         img.save("captured.jpg")
-        st.success("Image saved as captured.jpg")
+        #st.success("Image saved as captured.jpg")
 
         with st.spinner("Analyzing image..."):
              result = analyze_image("captured.jpg")
-             st.markdown("### Here's What We Found:")
+             #st.markdown("### Here's What We Found:")
              st.markdown(result)

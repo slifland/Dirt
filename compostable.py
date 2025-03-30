@@ -17,6 +17,7 @@ def analyze_image(image_path):
 
         data = {
             "model": "gpt-4o",
+            "temperature": 0.3,
             "messages": [
                 {
                     "role": "system",
@@ -24,13 +25,15 @@ def analyze_image(image_path):
                         {
                             "type": "text",
                             "text": (
-                                "You should determine whether an item in the image provided is compostable. "
-                                "Answer in the following format:\n\n"
-                                "1. [Object name]\n"
-                                "2. [Object name] is [compostable/not compostable]\n"
-                                "3. [Reasons for why object is compostable, if applicable]\n"
-                                "4. [Reasons for why object is not compostable, if applicable]\n"
-                                "5. [Specific steps for compost, if applicable]"
+                                 "You should determine whether an item in the image provided is compostable in a standard compost bin on college campuses. Answer using the EXACT format below, adjusting for grammar purposes. If you get any unexpected image inputs (e.g., entire humans), output the default response (found below)\n"
+                                "Response Format:\n\n"
+                                "# [Object name] is [compostable/not compostable]\n\n"
+                                "[Something like [HOOray -- your contributions are making a big impact!] if the item is compostable or [We appreciate that you're checking — every effort counts!] if the item is not compostable]\n\n"
+                                "### [\"Why is [item] compostable? 🌱 \" if applicable]\n\n"
+                                "### [\"Why is [item] not compostable? 🌱 \" if applicable]\n\n"
+                                "### [\"Specific Steps for Compost 🧑‍🌾 \" if applicable]\n\n"
+                                "Default Response (in italics):\n"
+                                "Shucks -- we had a bit of trouble with your request. Make sure you are in good lighting and that no external objects are visible in the camera."
                             )
                         }
                     ]
