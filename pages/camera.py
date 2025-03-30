@@ -46,7 +46,6 @@ if st.session_state.image:
     st.image(st.session_state.image, caption="Captured Image", use_container_width=True)
 else:
     st.write("No image captured yet.")
-
 if st.button("Confirm Picture"):
     if st.session_state.image:
         img = Image.open(st.session_state.image)
@@ -74,5 +73,6 @@ if st.button("Confirm Picture"):
                     time.sleep(2)
                     compostable = "no"
                     st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
+                    time.sleep(10000)
                  
              
