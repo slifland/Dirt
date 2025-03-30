@@ -61,11 +61,12 @@ def attempt_add_score(collection_name : str, manager) -> bool:
     result = list(result)
     if "manager" in st.session_state:
         cookie = st.session_state.get("manager").get("user_email")
+        time.sleep(2)
     else:
         st.error("Cookie manager not found in session state")
         return False
-    time.sleep(2)
     if cookie is None:
+        print(st.session_state.get("manager").get_all())
         st.error("User email not found in cookies")
         return False
     person = collection.find_one({"id": str(cookie)})
