@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from compostable import analyze_image
-
+@st.cache_resource
 def get_manager():
     st.session_state.manager = stx.CookieManager()
     return stx.CookieManager()
