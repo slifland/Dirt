@@ -11,10 +11,6 @@ try:
 except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    
-
-if not 'authenticated' in st.session_state:
-    st.stop()
 
 st.set_page_config(
     page_title="Leaderboard",
