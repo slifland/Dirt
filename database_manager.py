@@ -1,5 +1,11 @@
 import pymongo
 import streamlit as st
+import extra_streamlit_components as stx
+import datetime
+
+
+def get_manager():
+    return stx.CookieManager()
 
 @st.cache_resource
 def init_connection():
@@ -41,7 +47,28 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
     result = collection.find()
     result = list(result)
     collection.update_one({"id": user_id}, {"$inc": {"score": 1}})
-
+    
+    #adds one to a user's score
+def attempt_add_score(collection_name : str) -> bool:
+    client = init_connection()
+    if collection_name not in client.hoohacks25bas.list_collection_names():
+        st.error("Collection does not exist")
+        return
+    db = client.hoohacks25bas
+    collection = db[collection_name]
+    result = collection.find()
+    result = list(result)
+    manager = get_manager()
+    cookie = manager.get("user_email")
+    if cookie is None:
+        st.error("User email not found in cookies")
+        return False
+    person = collection.find_one({"id": str(cookie)})
+    if('last_scored' not in person or datetime.datetime.now() - person['last_scored']).total_seconds() < 500:
+        collection.update_one({"id": str(cookie)}, {"$inc": {"score": 1}, "$set": {"last_scored": datetime.datetime.now()}})
+        return True
+    else:
+        return False
 
 #adds a user to the database if they do not exist
 def add_user_if_necessary(user : dict):

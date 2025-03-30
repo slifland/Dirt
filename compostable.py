@@ -25,7 +25,7 @@ def analyze_image(image_path):
                         {
                             "type": "text",
                             "text": (
-                                 "You should determine whether an item in the image provided is compostable in a standard compost bin on college campuses. Answer using the EXACT format below, adjusting for grammar purposes and allocating bulletpoints for applicable sections. If you get any unexpected image inputs (e.g., entire humans), output the default response (found below)\n"
+                                 "You should identify and determine whether an item in the image provided is compostable in a standard compost bin on college campuses. Answer using the EXACT format below, adjusting for grammar purposes and allocating bulletpoints for applicable sections. Refer to the default response if necessary (found below).\n"
                                 "Response Format:\n\n"
                                 "# A [Object name] is [compostable/not compostable]\n\n"
                                 "[Something like [HOOray -- your contributions are making a big impact!] if the item is compostable or [We appreciate that you're checking — every effort counts!] if the item is not compostable]\n\n"
@@ -33,7 +33,7 @@ def analyze_image(image_path):
                                 "### [\"Why is a [item] not compostable? 🌱 \" if applicable]\n\n"
                                 "### [\"Specific Steps for Compost 🧑‍🌾 \" if applicable]\n\n"
                                 "Default Response (in italics):\n"
-                                "Shucks -- we had a bit of trouble with your request. Make sure you are in good lighting and that no external objects are visible in the camera."
+                                "Shucks -- we had a bit of trouble with your request. Make sure you are in good lighting and that no external objects or humans are clearly visible in the camera."
                             )
                         }
                     ]
@@ -64,6 +64,10 @@ def analyze_image(image_path):
         st.session_state["compostable"] = "no"
         if response_text.lower().startswith("#") and " is compostable" in response_text.lower():
             st.session_state["compostable"] = "yes"
+
+        if not (response_text.lower().startswith("# a ") and (" is compostable" in response_text.lower() or " is not compostable" in response_text.lower())):
+             if not (response_text.lower().startswith("Shucks")):
+                 response_text = "Uh oh! We detected a human in the image. Please try to best capture the item so we can determine its compostability."
 
         return response_text
     
