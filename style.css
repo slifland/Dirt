@@ -51,9 +51,9 @@
     }
 @media forced-colors: active{
     :root {
-        --background: #FFF;
-        --background2:#F1F2F6;
-        --text:#3E2729;
+        --background: ##2D2F33;
+        --background2:##434A51;
+        --text:###FAFEFF;
         --accent:#05AA6D;
         --highlight: #FFD700;
         --highlight-bright: #fcd928;
