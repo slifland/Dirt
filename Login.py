@@ -109,7 +109,7 @@ else:
         cookie_manager = get_manager()
     else:
         cookie_manager = manager
-    cookie_manager.set("user_logged_in", True, key='user_logged_in')
+    cookie_manager.set("user_logged_in", True, key='user_logged_in', max_age=2592000)
     st.write("You are logged in!")
     st.session_state.logged_in = True
     st.switch_page("pages/app.py")
