@@ -86,7 +86,6 @@ def analyze_image(image_path):
             },
             "required": ["category"]
         }
-        st.write(st.session_state["compostable"])
         if(st.session_state["compostable"] == "yes"):
             data = {
                 "model": "gpt-4o",
@@ -114,12 +113,14 @@ def analyze_image(image_path):
             )
 
             result = response.json()
+            
 
             # Check for errors in the response
             if "error" in result:
                 st.error(f"API Error: {result['error']['message']}")
             else:
                 category = result['choices'][0]['message']['content']['category']
+                st.write(category)
                 st.session_state["compostable_category"] = category
                 st.write(f"Category: {category}")
         
