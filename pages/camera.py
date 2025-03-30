@@ -6,7 +6,16 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+
 from compostable import analyze_image
+
+import asyncio
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
 
 st.sidebar.page_link('pages/leaderboard.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')

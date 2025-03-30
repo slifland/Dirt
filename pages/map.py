@@ -2,6 +2,13 @@ import streamlit as st
 import folium
 from streamlit_folium import st_folium
 
+import asyncio
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
 st.set_page_config(page_title="Compost @ UVA", layout="wide")
 st.title("Compost Bin Locations at UVA")
 

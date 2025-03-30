@@ -4,12 +4,10 @@ from requests_oauthlib import OAuth2Session
 import os
 import extra_streamlit_components as stx
 import database_manager
-import asyncio
 import webbrowser
 import time
 from streamlit_javascript import st_javascript
-
-
+import asyncio
 try:
     loop = asyncio.get_running_loop()
 except RuntimeError:
