@@ -9,6 +9,11 @@ try:
 except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
+    
+st.sidebar.page_link('pages/leaderboard.py', label='Home')
+st.sidebar.page_link('pages/camera.py', label='Camera')
+st.sidebar.page_link('pages/map.py', label='Map')
+st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
@@ -34,7 +39,7 @@ for record in data_list_category:
 df = pd.DataFrame(data_list)
 df_category = pd.DataFrame(data_list_category)
 
-st.title("%s+ Items Composted" % total_composted)
+st.title("%s Items Composted" % total_composted)
 
 if 'id' in df.columns and 'score' in df.columns:
         st.title("Distribution of Compost Scores")
