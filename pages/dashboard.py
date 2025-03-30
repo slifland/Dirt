@@ -40,6 +40,7 @@ df = pd.DataFrame(data_list)
 df_category = pd.DataFrame(data_list_category)
 
 st.title("%s Items Composted" % total_composted)
+st.title("%s Items Composted" % total_composted)
 
 if 'id' in df.columns and 'score' in df.columns:
         st.title("Distribution of Compost Scores")
