@@ -17,9 +17,7 @@ try:
 except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    
-def get_manager():
-    return stx.CookieManager()
+
 
 st.sidebar.page_link('pages/camera.py', label='Upload')
 st.sidebar.page_link('pages/leaderboard.py', label='Leaderboard')
@@ -57,20 +55,11 @@ if st.button("Confirm Picture"):
              #st.markdown("### Here's What We Found:")
              st.markdown(result)
              compostable = st.session_state.get("compostable", "unknown")
-             manager = get_manager()
              if compostable == "yes":
-                cookie_points = manager.get("gained_points")
-                time.sleep(2)
-                if cookie_points: 
-                    st.error("You have already gained points in the last 5 minutes. Thanks for helping the environment!")
-                    time.sleep(10000)
-                else:
-                    cookie = manager.get("user_email")
-                    time.sleep(2)
-                    client = database_manager.init_connection()
-                    database_manager.add_score(client, str(cookie), 'userInfo')
-                    manager.set("gained_points", "gained_points", max_age=300)
-                    time.sleep(2)
-                    st.session_state.compostable = None
+                added = database_manager.attempt_add_score('userInfo')
+                st.session_state.compostable = None
+                if added:
                     st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
+                else:
+                    st.error("You have received points in the last 5 minutes. Thanks for helping environment!")
              
