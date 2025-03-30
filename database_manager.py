@@ -39,7 +39,7 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
         return
     db = client.hoohacks25bas
     collection = db[collection_name]
-    collection.update_one({"userID": user_id}, {"$inc": {"score": 1}})
+    collection.update_one({"id": user_id}, {"$inc": {"score": 1}})
 
 #gets the id of the next up user
 def get_new_id() -> int:

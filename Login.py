@@ -5,6 +5,7 @@ import os
 import extra_streamlit_components as stx
 import database_manager
 import asyncio
+import webbrowser
 
 try:
     loop = asyncio.get_running_loop()
@@ -103,13 +104,8 @@ if not st.session_state.authenticated:
             
             st.write(f"Redirecting to: {authorization_url}")
             
-            # Redirect to authorization URL
-            js_code = f"""
-            <script>
-            window.location.href = "{authorization_url}";
-            </script>
-            """
-            st.components.v1.html(js_code, height=0)
+            webbrowser.open(authorization_url)
+    
 else:
     if not manager:
         cookie_manager = get_manager()
