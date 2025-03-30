@@ -38,9 +38,9 @@ else:
     st.button("Add one to your score", on_click=database_manager.add_score, args=(client, str(cookie), 'userInfo'))  # Add one to the user's score
 
 
-if st.session_state.get("compostable") == "yes":
-    database_manager.add_score(client, str(cookie), 'userInfo')  # Add one to the user's score
-    st.session_state["compostable"] = "no"
+# if st.session_state.get("compostable") == "yes":
+#     database_manager.add_score(client, str(cookie), 'userInfo')  # Add one to the user's score
+#     st.session_state["compostable"] = "no"
 
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
 df = pd.DataFrame(data)
