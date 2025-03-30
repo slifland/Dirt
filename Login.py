@@ -12,7 +12,7 @@ def get_manager():
     return stx.CookieManager()
 
 
-
+manager = None
 cookies = st.context.cookies
 if not "user_logged_in" in cookies:
     manager = get_manager()
