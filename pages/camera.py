@@ -10,22 +10,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from compostable import analyze_image
 
-def get_manager():
-    return stx.CookieManager()
-
 import asyncio
 try:
     loop = asyncio.get_running_loop()
 except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-
-manager = None
-if not "manager" in st.session_state:
-    st.session_state.manager = get_manager()
-    manager = st.session_state.manager
-else:
-    manager = st.session_state.manager
 
 st.sidebar.page_link('pages/camera.py', label='Upload')
 st.sidebar.page_link('pages/leaderboard.py', label='Leaderboard')
@@ -63,10 +53,7 @@ if st.button("Confirm Picture"):
             st.markdown(result)
             compostable = st.session_state.get("compostable", "unknown")
             if compostable == "yes":
-                added = database_manager.attempt_add_score('userInfo', manager)
-                st.session_state.compostable = None
-                if added:
-                    st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
-                else:
-                    st.error("You have received points in the last 5 minutes. Thanks for helping environment!")
+                st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
+                if st.button("Go to leaderboard"):
+                    st.switch_page('pages/leaderboard.py')
              

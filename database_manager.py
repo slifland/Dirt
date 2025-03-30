@@ -49,34 +49,33 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
     result = list(result)
     collection.update_one({"id": user_id}, {"$inc": {"score": 1}})
     
-    #adds one to a user's score
-def attempt_add_score(collection_name : str, manager) -> bool:
-    client = init_connection()
-    if collection_name not in client.hoohacks25bas.list_collection_names():
-        st.error("Collection does not exist")
-        return False
-    db = client.hoohacks25bas
-    collection = db[collection_name]
-    result = collection.find()
-    result = list(result)
-    if "manager" in st.session_state:
-        cookie = st.session_state.get("manager").get("user_email")
-        time.sleep(2)
-    else:
-        st.error("Cookie manager not found in session state")
-        return False
-    if cookie is None:
-        print(st.session_state.get("manager").get_all())
-        st.error("User email not found in cookies")
-        return False
-    person = collection.find_one({"id": str(cookie)})
-    if 'last_scored' not in person or (datetime.datetime.now() - person['last_scored']).total_seconds() < 500:
-        collection.update_one({"id": str(cookie)}, {"$inc": {"score": 1}, "$set": {"last_scored": datetime.datetime.now()}})
-        client.close()
-        return True
-    else:
-        client.close()
-        return False
+#     #adds one to a user's score
+# def attempt_add_score(collection_name : str, manager) -> bool:
+#     client = init_connection()
+#     if collection_name not in client.hoohacks25bas.list_collection_names():
+#         st.error("Collection does not exist")
+#         return False
+#     db = client.hoohacks25bas
+#     collection = db[collection_name]
+#     result = collection.find()
+#     result = list(result)
+#     if "manager" in st.session_state:
+#         cookie = st.session_state.get("manager").get("user_email")
+#         time.sleep(2)
+#     else:
+#         st.error("Cookie manager not found in session state")
+#         return False
+#     if cookie is None:
+#         st.error("User email not found in cookies")
+#         return False
+#     person = collection.find_one({"id": str(cookie)})
+#     if 'last_scored' not in person or (datetime.datetime.now() - person['last_scored']).total_seconds() < 500:
+#         collection.update_one({"id": str(cookie)}, {"$inc": {"score": 1}, "$set": {"last_scored": datetime.datetime.now()}})
+#         client.close()
+#         return True
+#     else:
+#         client.close()
+#         return False
 
 #adds a user to the database if they do not exist
 def add_user_if_necessary(user : dict):
