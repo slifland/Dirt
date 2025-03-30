@@ -54,7 +54,8 @@ if st.button("Confirm Picture"):
             compostable = st.session_state.get("compostable", "unknown")
             if compostable == "yes":
                 st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
-                st.button("Go to leaderboard", on_click=st.switch_page('pages/leaderboard.py'))
+                st.button("Go to leaderboard", on_click=lambda: st.switch_page("pages/leaderboard")) 
+
                 # if st.button("Go to leaderboard"):
                 #     st.switch_page('pages/leaderboard.py')
              
