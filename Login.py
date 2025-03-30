@@ -87,6 +87,7 @@ if not st.session_state.authenticated:
                 cookie_manager = manager
             cookie_manager.set("user_email", user_info['email'], key='userid', max_age=2592000)
             time.sleep(2)
+            st.session_state['user_email'] = user_info['email']
             
             # Clear query parameters to avoid token reuse
             st.query_params.clear()
@@ -122,4 +123,8 @@ else:
     time.sleep(2)
     st.write("You are logged in!")
     st.session_state.logged_in = True
+    
+    cookie = cookie_manager.get("user_email")
+    if cookie:
+        st.session_state['user_email'] = str(cookie)
     st.switch_page("pages/camera.py")

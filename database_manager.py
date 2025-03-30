@@ -40,9 +40,12 @@ def insert_data(document, collection_name : str):
     
 #adds one to a user's score
 def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str):
+    if not client:
+        client = init_connection()
     if collection_name not in client.hoohacks25bas.list_collection_names():
         st.error("Collection does not exist")
         return
+    
     db = client.hoohacks25bas
     collection = db[collection_name]
     result = collection.find()
