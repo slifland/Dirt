@@ -53,8 +53,10 @@ if st.button("Confirm Picture"):
             st.markdown(result)
             compostable = st.session_state.get("compostable", "unknown")
             if compostable == "yes":
-                st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
-                database_manager.add_score(None, st.session_state.get("user_email"), "userInfo")
+                if database_manager.add_score(None, st.session_state.get("user_email"), "userInfo"):
+                    st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
+                else:
+                    st.error("You can't earn points because it has been less than 5 minutes since your last point. Thanks for helping to saving the environment!")
                 st.session_state['compostable'] = 'no'
 
                 # if st.button("Go to leaderboard"):
