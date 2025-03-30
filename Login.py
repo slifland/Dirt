@@ -16,8 +16,9 @@ def get_manager():
 cookies = st.context.cookies
 if not "user_logged_in" in cookies:
     manager = get_manager()
-    manager.set("user_logged_in", False)
-    st.rerun()
+    if manager.get("user_logged_in") is None:
+        manager.set("user_logged_in", False)
+        st.rerun()
 elif "user_logged_in" in cookies:
     value = cookies["user_logged_in"]
     if value == 'true':
