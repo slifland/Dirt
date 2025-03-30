@@ -56,6 +56,7 @@ streamlit==1.44.0
 streamlit-authenticator==0.4.2
 streamlit-cookies-controller==0.0.4
 streamlit-oauth==0.1.14
+streamlit_folium==0.24.0
 tenacity==9.0.0
 toml==0.10.2
 tornado==6.4.2
