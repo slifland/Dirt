@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from compostable import analyze_image
-@st.cache_resource
+
 def get_manager():
     return stx.CookieManager()
 
@@ -20,7 +20,12 @@ except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
-manager = get_manager()
+manager = None
+if not "manager" in st.session_state:
+    manager = get_manager()
+else:
+    manager = st.session_state.manager
+    time.sleep(2)
 
 st.sidebar.page_link('pages/camera.py', label='Upload')
 st.sidebar.page_link('pages/leaderboard.py', label='Leaderboard')
