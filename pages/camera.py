@@ -1,6 +1,7 @@
 from PIL import Image
 import streamlit as st
 import io
+import extra_streamlit_components as stx
 import time
 import sys
 import os
@@ -15,6 +16,9 @@ try:
 except RuntimeError:
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
+    
+def get_manager():
+    return stx.CookieManager()
 
 st.sidebar.page_link('pages/camera.py', label='Upload')
 st.sidebar.page_link('pages/leaderboard.py', label='Leaderboard')
@@ -55,6 +59,7 @@ if st.button("Confirm Picture"):
              compostable = st.session_state.get("compostable", "unknown")
              if compostable == 'yes':
                  #st.button("Go to leaderboard!", on_click=st.switch_page("pages/leaderboard.py"))
-                 st.success("You have points waiting for you! Go to leaderboard tab to receive them.")
+                 if not get_manager().get("gained_points"):
+                     st.success("You have points waiting for you! Go to leaderboard tab to receive them.")
                  
              
