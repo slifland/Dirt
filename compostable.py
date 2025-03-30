@@ -62,6 +62,10 @@ def analyze_image(image_path):
         response_text = result['choices'][0]['message']['content']
         st.success(response.text)
 
+
+        st.session_state["compostable"] = "yes"
+        return response_text
+    
         st.session_state["compostable"] = "no"
         if response_text.lower().startswith("#") and " is compostable" in response_text.lower():
             st.session_state["compostable"] = "yes"
