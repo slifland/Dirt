@@ -4,6 +4,7 @@ import pandas as pd
 import asyncio
 import extra_streamlit_components as stx
 import matplotlib
+import time
 
 
 try:
@@ -29,6 +30,7 @@ client = database_manager.init_connection()
 
 manager = get_manager()
 cookie = manager.get("user_email")
+time.sleep(2)
 if cookie is None:
     st.error("User email not found in cookies")
     st.stop()
