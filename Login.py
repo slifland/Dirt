@@ -26,13 +26,14 @@ cookies = st.context.cookies
 if not "user_logged_in" in cookies:
     manager = get_manager()
     if manager.get("user_logged_in") is None:
+        time.sleep(2)
         manager.set("user_logged_in", False)
         time.sleep(2)
         st.rerun()
-elif "user_logged_in" in cookies:
-    value = cookies["user_logged_in"]
-    if value == 'true':
-        st.session_state.authenticated = True
+    else:
+        value = manager.get("user_logged_in")
+        if value == 'true':
+            st.session_state.authenticated = True
 
 
 # Google OAuth configuration
