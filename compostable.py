@@ -113,14 +113,14 @@ def analyze_image(image_path):
             )
 
             result = response.json()
-            
+            st.write(result)
+
 
             # Check for errors in the response
             if "error" in result:
                 st.error(f"API Error: {result['error']['message']}")
             else:
                 category = result['choices'][0]['message']['content']['category']
-                st.write(category)
                 st.session_state["compostable_category"] = category
                 st.write(f"Category: {category}")
         
