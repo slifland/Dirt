@@ -63,6 +63,7 @@ if st.button("Confirm Picture"):
                 time.sleep(2)
                 if cookie_points: 
                     st.error("You have already gained points in the last 5 minutes. Thanks for helping the environment!")
+                    time.sleep(10000)
                 else:
                     cookie = manager.get("user_email")
                     time.sleep(2)
@@ -70,6 +71,6 @@ if st.button("Confirm Picture"):
                     database_manager.add_score(client, str(cookie), 'userInfo')
                     manager.set("gained_points", "gained_points", max_age=300)
                     time.sleep(2)
-                    #st.session_state.compostable = None
+                    st.session_state.compostable = None
                     st.success("Congrats! You gained 1 point. Go to leaderboard to see your score.")
              
