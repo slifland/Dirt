@@ -69,7 +69,7 @@ def attempt_add_score(collection_name : str, manager) -> bool:
         st.error("User email not found in cookies")
         return False
     person = collection.find_one({"id": str(cookie)})
-    if('last_scored' not in person or datetime.datetime.now() - person['last_scored']).total_seconds() < 500:
+    if 'last_scored' not in person or (datetime.datetime.now() - person['last_scored']).total_seconds() < 500:
         collection.update_one({"id": str(cookie)}, {"$inc": {"score": 1}, "$set": {"last_scored": datetime.datetime.now()}})
         client.close()
         return True
