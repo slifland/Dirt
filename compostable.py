@@ -122,7 +122,6 @@ def analyze_image(image_path):
                 category = result['choices'][0]['message']['content']['category']
                 st.session_state["compostable_category"] = category
                 st.write(f"Category: {category}")
-        
         return response_text
     
 
