@@ -11,6 +11,7 @@ from compostable import analyze_image
 st.sidebar.page_link('pages/app.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
 st.sidebar.page_link('pages/map.py', label='Map')
+st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)

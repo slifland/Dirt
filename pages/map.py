@@ -8,6 +8,7 @@ st.title("Compost Bin Locations at UVA")
 st.sidebar.page_link('pages/app.py', label='Home')
 st.sidebar.page_link('pages/camera.py', label='Camera')
 st.sidebar.page_link('pages/map.py', label='Map')
+st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 
 bins = [
   { "name": "West Range Café", "lat": 38.03440597950913, "lng": -78.50549149999998 }, # 38.03440597950913, -78.50549149999998
