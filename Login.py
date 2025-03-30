@@ -52,8 +52,6 @@ if 'oauth_state' not in st.session_state:
     st.session_state.oauth_state = None
 
 def get_oauth_session():
-    st.write(f"Redirect URI before OAuth: {redirect_uri}")  # Check right before the OAuth call
-    time.sleep(10000)
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope, state=st.session_state.oauth_state)
 
 # Check authentication state
