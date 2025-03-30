@@ -4,6 +4,7 @@ import pandas as pd
 import asyncio
 import extra_streamlit_components as stx
 
+
 try:
     loop = asyncio.get_running_loop()
 except RuntimeError:
@@ -29,12 +30,12 @@ st.sidebar.page_link('pages/dashboard.py', label='Dashboard')
 client = database_manager.init_connection()
 
 manager = get_manager()
-cookie = manager.get("user_id")
+cookie = manager.get("user_email")
 if cookie is None:
-    st.error("User ID not found in cookies")
+    st.error("User email not found in cookies")
     st.stop()
 else:
-    st.button("Add one to your score", on_click=database_manager.add_score, args=(client, cookie, 'userInfo'))  # Add one to the user's score
+    st.button("Add one to your score", on_click=database_manager.add_score, args=(client, str(cookie), 'userInfo'))  # Add one to the user's score
 
 data = database_manager.get_data(client, 'userInfo')  # Get data from the database
 df = pd.DataFrame(data)

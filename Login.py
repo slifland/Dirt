@@ -6,6 +6,9 @@ import extra_streamlit_components as stx
 import database_manager
 import asyncio
 import webbrowser
+import time
+from streamlit_javascript import st_javascript
+
 
 try:
     loop = asyncio.get_running_loop()
@@ -26,6 +29,7 @@ if not "user_logged_in" in cookies:
     manager = get_manager()
     if manager.get("user_logged_in") is None:
         manager.set("user_logged_in", False)
+        time.sleep(2)
         st.rerun()
 elif "user_logged_in" in cookies:
     value = cookies["user_logged_in"]
@@ -38,7 +42,9 @@ client_id = "8378098624-ugfuo7avsq8b24lf28pkctk55c695e8j.apps.googleusercontent.
 client_secret = "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"
 authorization_base_url = "https://accounts.google.com/o/oauth2/auth"
 token_url = "https://oauth2.googleapis.com/token"
-#redirect_uri = "https://slifland-dirt-login-dtdc06.streamlit.app"
+url = st_javascript("await fetch('').then(r => window.parent.location.href)")
+redirect_uri = url
+print(url)
 redirect_uri = "http://localhost:8501"
 scope = ["https://www.googleapis.com/auth/userinfo.email", 
          "https://www.googleapis.com/auth/userinfo.profile", 
@@ -76,13 +82,14 @@ if not st.session_state.authenticated:
             # Store in session state
             st.session_state.user_info = user_info
             st.session_state.authenticated = True
-            new_user = {"id": user_info['id'], "score": 0}
+            new_user = {"id": user_info['email'], "score": 0}
             database_manager.add_user_if_necessary(new_user)
             if not manager:
                 cookie_manager = get_manager()
             else:
                 cookie_manager = manager
-            cookie_manager.set("user_id", user_info['id'], key='userid', max_age=2592000)
+            cookie_manager.set("user_email", user_info['email'], key='userid', max_age=2592000)
+            time.sleep(2)
             
             # Clear query parameters to avoid token reuse
             st.query_params.clear()
@@ -114,6 +121,7 @@ else:
     else:
         cookie_manager = manager
     cookie_manager.set("user_logged_in", True, key='user_logged_in', max_age=2592000)
+    time.sleep(2)
     st.write("You are logged in!")
     st.session_state.logged_in = True
     st.switch_page("pages/app.py")

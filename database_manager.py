@@ -25,7 +25,6 @@ def insert_data(document, collection_name : str):
         return
     if collection_name not in client.hoohacks25bas.list_collection_names():
         st.error("Collection does not exist")
-        print('Collection does not exist')
         return
     db = client.hoohacks25bas
     collection = db[collection_name]
@@ -39,6 +38,8 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
         return
     db = client.hoohacks25bas
     collection = db[collection_name]
+    result = collection.find()
+    result = list(result)
     collection.update_one({"id": user_id}, {"$inc": {"score": 1}})
 
 
