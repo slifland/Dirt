@@ -65,11 +65,11 @@ if not st.session_state.authenticated:
             # Get user info from the provider
             user_info_url = "https://www.googleapis.com/oauth2/v1/userinfo"
             user_info = oauth.get(user_info_url).json()
-            
             # Store in session state
             st.session_state.user_info = user_info
             st.session_state.authenticated = True
-            
+            new_user = {"id": user_info['id'], "score": 0}
+            database_manager.add_user_if_necessary(new_user)
             # Clear query parameters to avoid token reuse
             st.query_params.clear()
             st.rerun()
@@ -100,11 +100,6 @@ if not st.session_state.authenticated:
             st.components.v1.html(js_code, height=0)
 else:
     cookie_manager = get_manager()
-    if not "user_id" in cookies:
-        id = database_manager.get_new_id()
-        cookie_manager.set("user_id", id)
-        data = {'userID': id, 'score': 0}
-        database_manager.insert_data(data, "userInfo")
     cookie_manager.set("user_logged_in", True, key='user_logged_in')
     st.write("You are logged in!")
     st.session_state.logged_in = True
