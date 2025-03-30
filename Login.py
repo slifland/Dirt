@@ -103,7 +103,8 @@ if not st.session_state.authenticated:
             authorization_url, state = oauth.authorization_url(
                 authorization_base_url,
                 access_type="offline",  # Get refresh token too
-                prompt="select_account"  # Force account selection
+                prompt="select_account",  # Force account selection
+                redirect_uri="https://slifland-dirt-login-dtdc06.streamlit.app/"  # Explicitly set this
             )
             st.session_state.oauth_state = state
             
