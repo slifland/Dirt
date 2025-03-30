@@ -102,9 +102,10 @@ if not st.session_state.authenticated:
             )
             st.session_state.oauth_state = state
             
+            webbrowser.open(authorization_url)
+            
             st.write(f"Redirecting to: {authorization_url}")
             
-            webbrowser.open(authorization_url)
     
 else:
     if not manager:
