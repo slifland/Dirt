@@ -4,6 +4,13 @@ from requests_oauthlib import OAuth2Session
 import os
 import extra_streamlit_components as stx
 import database_manager
+import asyncio
+
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 
 with open('style.css') as f:
 	st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
@@ -40,11 +47,8 @@ if 'oauth_state' not in st.session_state:
     st.session_state.oauth_state = None
 
 def get_oauth_session():
-    print('hi')
-    st.button('hi')
     return OAuth2Session(client_id, redirect_uri=redirect_uri, scope=scope, state=st.session_state.oauth_state)
 
-st.button("hello!")
 # Check authentication state
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
