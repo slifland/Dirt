@@ -23,6 +23,7 @@ except RuntimeError:
 manager = None
 if not "manager" in st.session_state:
     st.session_state.manager = get_manager()
+    manager = st.session_state.manager
 else:
     manager = st.session_state.manager
 
