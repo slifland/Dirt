@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/a8315f51-e654-43d7-9be2-144082c5f676" alt="[dirt logo]"/>
+  <img src="https://github.com/user-attachments/assets/1f2b76fd-1676-4bc1-936a-c9dd812b17ec" alt="[dirt logo]"/>
 </p>
 
 ## Our Inspiration
