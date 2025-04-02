@@ -113,8 +113,7 @@ if not st.session_state.authenticated:
             webbrowser.open(authorization_url)
             
             st.write(f"Redirecting to: {authorization_url}")
-            
-    
+  
 else:
     if not manager:
         cookie_manager = get_manager()
@@ -126,6 +125,7 @@ else:
     st.session_state.logged_in = True
     
     cookie = cookie_manager.get("user_email")
+    time.sleep(2)
     if cookie:
         st.session_state['user_email'] = str(cookie)
     st.switch_page("pages/camera.py")

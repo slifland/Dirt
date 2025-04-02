@@ -54,7 +54,8 @@ def add_score(client : pymongo.MongoClient, user_id : str, collection_name : str
         result = compostedItems.find_one({"_id": st.session_state["compostable_category"]})
         if result:
             compostedItems.update_one({"_id": st.session_state["compostable_category"]}, {"$inc": {"count": 1}})
-            
+    st.write(user_id)
+    print(user_id)
     result = collection.find_one({"id": user_id})
     if not "last_scored" in result:
         collection.update_one({"id": user_id}, {"$inc": {"score": 1}, "$set": {"last_scored": datetime.datetime.now()}})
