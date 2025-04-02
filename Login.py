@@ -129,4 +129,4 @@ else:
     time.sleep(2)
     if cookie:
         st.session_state['user_email'] = str(cookie)
-   # st.switch_page("pages/camera.py")
+    st.switch_page("pages/camera.py")

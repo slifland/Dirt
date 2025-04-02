@@ -97,6 +97,7 @@ def add_user_if_necessary(user : dict):
     client = pymongo.MongoClient(
         f"mongodb+srv://slifland:{st.secrets.db_password}@cluster0.r3jmgkf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     db = client.hoohacks25bas
+    st.session_state["user_email"] = user['id']
     collection = db['userInfo']
     item = collection.find_one({"id": user['id']})
     if item is None:
