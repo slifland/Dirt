@@ -34,6 +34,7 @@ st.title("Take a Picture!")
 
 if "image" not in st.session_state:
     st.session_state.image = None
+        
 
 image = st.camera_input("")
 
